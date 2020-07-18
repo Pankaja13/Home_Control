@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from .my_settings import THIS_SECRET_KEY
+from .my_settings import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = THIS_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = DEBUG
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ALLOWED_HOSTS
 
 
 # Application definition
@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 	'django.contrib.staticfiles',
 	'HomeControl.apps.HomecontrolConfig',
 	'dashboard.apps.DashboardConfig',
-	'rest_framework'
+	'rest_framework',
+	'django_cron'
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,10 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CRON_CLASSES = [
+	"dashboard.updater.Regulate"
 ]
 
 ROOT_URLCONF = 'Home_Control.urls'
@@ -129,10 +134,6 @@ LOGGING = {
 	'version': 1,
 	'disable_existing_loggers': False,
 	'formatters': {
-		# 'verbose': {
-		# 	'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-		# 	'style': '{',
-		# },
 		'simple': {
 			'format': '{asctime} {levelname} {message}',
 			'style': '{',
@@ -149,11 +150,17 @@ LOGGING = {
 			'filters': ['require_debug_true'],
 			'class': 'logging.StreamHandler',
 			'formatter': 'simple'
-		}
+		},
+		'file': {
+			'level': 'INFO',
+			'class': 'logging.FileHandler',
+			'filename': 'django.log',
+			'formatter': 'simple'
+		},
 	},
 	'loggers': {
 		'django': {
-			'handlers': ['console'],
+			'handlers': ['console', 'file'],
 			'propagate': True,
 		},
 	}
@@ -167,3 +174,6 @@ REST_FRAMEWORK = {
 		'rest_framework.permissions.IsAuthenticated',
 	]
 }
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
