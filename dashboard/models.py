@@ -14,6 +14,9 @@ class Room(models.Model):
 	def __repr__(self):
 		return self.room_name
 
+	def __str__(self):
+		return self.room_name
+
 
 class Control(models.Model):
 	control_name = models.CharField(max_length=50)
