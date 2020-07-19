@@ -2,7 +2,7 @@ from .models import Room, Sensor, Control
 from functools import reduce
 from django_cron import CronJobBase, Schedule
 import logging
-logger = logging.getLogger('django')
+logger = logging.getLogger('dashboard')
 
 
 class Regulate(CronJobBase):
@@ -16,7 +16,7 @@ class Regulate(CronJobBase):
 			sensors = Sensor.objects.filter(room__room_name=room.room_name, type=Sensor.TEMP)
 			temperature_list = list(map(lambda sensor: float(sensor.get_value()), sensors))
 			temperature = reduce(lambda total, value: total + value, temperature_list) / len(temperature_list)
-			logger.info(temperature_list)
+			logger.info(room.room_name + str(temperature_list))
 			control = Control.objects.get(control_name="Main HVAC Control")
 			if temperature > room.max_room_temp:
 				control.set_state('Cool')

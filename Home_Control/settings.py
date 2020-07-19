@@ -129,7 +129,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 LOGGING = {
 	'version': 1,
 	'disable_existing_loggers': False,
@@ -152,17 +151,21 @@ LOGGING = {
 			'formatter': 'simple'
 		},
 		'file': {
-			'level': 'INFO',
+			'level': 'DEBUG',
 			'class': 'logging.FileHandler',
 			'filename': 'django.log',
 			'formatter': 'simple'
 		},
 	},
 	'loggers': {
-		'django': {
+		'dashboard': {
 			'handlers': ['console', 'file'],
-			'propagate': True,
+			'level': 'DEBUG'
 		},
+		'django': {
+			'handlers': ['console'],
+			'propagate': True
+		}
 	}
 }
 
