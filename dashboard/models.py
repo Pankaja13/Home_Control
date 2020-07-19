@@ -76,7 +76,10 @@ class Sensor(models.Model):
 		return self.sensor_name
 
 	def get_value(self):
-		value = None
-		for _ in range(3):
-			value = requests.get(url=self.url, timeout=5).text
-		return value
+		try:
+			value = None
+			for _ in range(3):
+				value = requests.get(url=self.url, timeout=5).text
+			return value
+		except requests.exceptions.ConnectTimeout:
+			return None
