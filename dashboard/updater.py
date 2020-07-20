@@ -14,7 +14,7 @@ class Regulate(CronJobBase):
 		for room in Room.objects.all():
 			# Temperature Regulation
 			sensors = Sensor.objects.filter(room__room_name=room.room_name, type=Sensor.TEMP)
-			temperature_list = list(map(lambda sensor: float(sensor.get_value()), sensors))
+			temperature_list = [float(x) for x in map(lambda sensor: sensor.get_value(), sensors) if x is not None]
 			temperature = reduce(lambda total, value: total + value, temperature_list) / len(temperature_list)
 			logger.info(room.room_name + str(temperature_list))
 			control = Control.objects.get(control_name="Main HVAC Control")
