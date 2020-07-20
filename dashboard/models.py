@@ -81,5 +81,5 @@ class Sensor(models.Model):
 			for _ in range(3):
 				value = requests.get(url=self.url, timeout=5).text
 			return value
-		except requests.exceptions.ConnectTimeout:
+		except (requests.exceptions.ConnectTimeout, requests.exceptions.ConnectionError):
 			return None
