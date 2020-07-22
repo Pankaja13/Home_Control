@@ -10,6 +10,7 @@ class Room(models.Model):
 	max_room_temp = models.FloatField(null=True, blank=True)
 	current_temp = models.FloatField(null=True, blank=True)
 	current_temp_timestamp = models.DateTimeField(null=True, blank=True)
+	enabled = models.BooleanField(default=False, blank=True)
 
 	def __repr__(self):
 		return self.room_name
