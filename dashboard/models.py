@@ -43,8 +43,6 @@ class Control(models.Model):
 		return self.control_name
 
 	def set_state(self, state):
-		if state == self.current_state:
-			return
 		try:
 			index = self.states.index(state)
 		except ValueError:
