@@ -10,8 +10,36 @@
 </head>
 <body>
 
-	<div class="container-fluid">
-		<h1>{{ room.room_name }}</h1>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-4 m-3">
+				<div class="row">
+					<h4 class="display-4">{{ room.room_name }}</h4>
+				</div>
+
+				<div class="row">
+					Room Status	{{ room.enabled | yesno:"✅,❌"  }}
+				</div>
+
+				<div class="row">
+					Target Range: {{ room.min_room_temp }} - {{ room.max_room_temp }}
+				</div>
+
+				<div class="row">
+					Average Temp: {{ average_temperature|floatformat:2 }}
+				</div>
+
+				<div class="row pt-4">
+					<h5> Sensor Values</h5>
+				</div>
+
+				{% for sensor_name, value in sensors.items %}
+					<div class="row">
+						{{ sensor_name }} : {{ value }}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
 	</div>
 	
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
