@@ -12,7 +12,7 @@ Django==3.0.14
 django-common-helpers==0.9.2
 django-cron==0.5.1
 django-mysql==3.5.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 djangorestframework-api-key==2.0.0
 docutils==0.15.2
 future==0.18.2
